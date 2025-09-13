@@ -1,11 +1,3 @@
-/* 
-• Define classes for Book, Member, and Library.
-• Allow adding new books and members to the library.
-• Implement functionality for borrowing and returning books.
-• Ensure that a book cannot be borrowed if it is already checked out.
-• Display the list of available books and the borrowing status.
-• Use appropriate methods and attributes for each class.
-*/
 #include <iostream>
 #include <string>
 #include <vector>
@@ -218,7 +210,7 @@ public:
         cout << "\n-----------------------STATUS-----------------------\n" << 
                 "Total of members: " << memberlist.size() << 
                 "\nTotal of books: " << booklist.size() << 
-                "\n\n List of members:\n";
+                "\n\nList of members:\n";
         for (auto& m : memberlist) {
             m.display();
         }
@@ -239,7 +231,7 @@ int main () {
 
     int selection;
     do {
-        cout << "                   Tilin Library\n" << 
+        cout << "\n                   Tilin Library\n" << 
                 "----------------------WELCOME----------------------\n" << 
                 "\nPick a number to select any of this options:\n" <<
                 "1) Borrow a book.\n" <<
