@@ -2,23 +2,17 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "cppbuild",
-      "label": "C/C++: g++ build active file",
-      "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+      "label": "build ScheduleOrganized",
+      "type": "shell",
+      "command": "g++",
       "args": [
-        "-fdiagnostics-color=always",
-        "-g",
-        "${file}",
-        "-o",
-        "${fileDirname}\\${fileBasenameNoExtension}.exe"
+        "-std=c++17","-g","-Wall","-Wextra","-pedantic",
+        "Schedule.cpp","Schedulemain.cpp",
+        "-o","app.exe"
       ],
-      "options": { "cwd": "${fileDirname}" },
-      "problemMatcher": ["$gcc"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "detail": "Compila archivo activo con g++"
+      "options": { "cwd": "${workspaceFolder}/Tareas/OPP/Assignment2/ScheduleOrganized" },
+      "group": "build",
+      "problemMatcher": ["$gcc"]
     }
   ]
 }
