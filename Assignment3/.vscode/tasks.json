@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Tarea3.cpp (g++)", // Un nombre que identifica la tarea
+            "type": "shell",
+            "command": "g++", // Comando del compilador
+            "args": [
+                "-g", // Habilita la depuración
+                "${file}", // El archivo C++ activo (Tarea3.cpp)
+                "-o", // Bandera para especificar el nombre del archivo de salida
+                "${fileDirname}/${fileBasenameNoExtension}" // Ubicación y nombre del ejecutable de salida
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Compila el archivo C++ con g++",
+            "presentation": {
+                "reveal": "always" // Mostrar el terminal durante la compilación
+            }
+        }
+    ]
+}
