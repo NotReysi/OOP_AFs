@@ -327,7 +327,7 @@ int main(){
                 "4) See the tree in order.\n" <<
                 "5) Merge to another tree.\n" <<
                 "0) Exit the system\n";
-        cout << "Selection: "; 
+        cout << "\nSelection: "; 
         cin >> selection;
 
         switch (selection){
@@ -342,6 +342,7 @@ int main(){
                 cin >> val;
 
                 tree.insert(val);
+                cout << "\n-----------------------------------------------------\n";
                 break;
             }
             case 2:{
@@ -355,6 +356,7 @@ int main(){
                 else{
                     cout << val << " does not exist in the Tree D:\n";
                 }
+                cout << "\n-----------------------------------------------------\n";
                 break;
             }
             case 3:{
@@ -368,6 +370,7 @@ int main(){
                     tree.errase(val);
                     cout << "\n...Deleting value...\n";
                 }
+                cout << "\n-----------------------------------------------------\n";
                 break;
             }
             case 4:{
@@ -381,6 +384,7 @@ int main(){
                 cout << "\nTree postorder: " << endl;
                 cout << "   ";
                 tree.postorder();
+                cout << "\n-----------------------------------------------------\n";
                 break;
             }
             case 5:{
@@ -411,17 +415,21 @@ int main(){
                     cout << "\n...Merging Trees...\n";
                     tree.merge(otherTree);
                     cout << "\nTrees merged :D\n";
+                    cout << "\n-----------------------------------------------------\n";
                     break;
                 }
                 else if(merge_selection == 2){
                     cout << "\nOkay, try again.\n";
+                    cout << "\n-----------------------------------------------------\n";
                     break;
                 }
                 else{
                     cout << "\n############     Please select a number between 1 and 2  >:(     ############\n";
                     cout << "\nTry again.\n";
+                    cout << "\n-----------------------------------------------------\n";
                     break;
                 }
+                cout << "\n-----------------------------------------------------\n";
                 break;
             }
             default:{       // Invalid input guard for numbers outside the expected range
