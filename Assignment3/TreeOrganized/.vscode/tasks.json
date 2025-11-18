@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar (g++)",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "${fileDirname}/AVLTreemain.cpp",
+                "${fileDirname}/AVLTree.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Compila el proyecto con g++",
+            "presentation": {
+                "reveal": "always"
+            }
+        }
+    ]
+}
