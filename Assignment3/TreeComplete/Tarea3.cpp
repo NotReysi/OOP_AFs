@@ -10,22 +10,22 @@ using namespace std;
 //This helps to get rid of the imprecision
 const double e = 1e-9;
 
-// ---------- Definition of the Node structure ----------
-struct Node{
-    //---------- Atributes ----------
-    double value;  // The value stored in the node
-    int height;    // The height of the subtree rooted at this node
-    Node* left;    // Pointer to the left child
-    Node* right;   // Pointer to the right child
+    // ---------- Definition of the Node structure ----------
+    struct Node{
+        //---------- Atributes ----------
+        double value;  // The value stored in the node
+        int height;    // The height of the subtree rooted at this node
+        Node* left;    // Pointer to the left child
+        Node* right;   // Pointer to the right child
 
-    // Constructor
-    Node(double val){
-        value = val;
-        height = 1;
-        left = nullptr;
-        right = nullptr;
-    }
-};
+        // Constructor
+        Node(double val){
+            value = val;
+            height = 1;
+            left = nullptr;
+            right = nullptr;
+        }
+    };
 
 // ---------- Definition of the Tree class ----------
 class Tree{
@@ -120,6 +120,93 @@ class Tree{
 
             return node;
         }
+
+        // -- Recursive function to search a node -- 
+        Node* search(Node* node, double value){
+            if (node == nullptr){               // Not found
+                return nullptr;
+            }
+            if(abs(value - node->value) < e){   // Found
+                return node;
+            }
+            else if (value < node->value){      // Go left
+                return search(node->left, value);
+            }
+            else {                              // Go right
+                return search(node->right, value);
+            }
+        }
+
+        // -- Recursive function to erase a node -- 
+        Node* erase(Node* node, double value){
+            if (node == nullptr){   // Find the node
+                return nullptr;
+            }
+            
+            if (value < node->value){
+                node->left = erase(node->left, value);
+            }
+            else if (value > node->value){
+                node->right = erase(node->right, value);
+            }
+            // Node found, start deletion logic
+            else if(abs(value - node->value) < e){
+                // Case 1: No children (leaf node)
+                if (node->left == nullptr && node->right == nullptr){
+                    delete node;
+                    return nullptr;
+                }
+                // Case 2: Two children
+                else if(node->left != nullptr && node->right != nullptr){
+                    // Find smallest node in right subtree
+                    Node* current = node->right;
+                    while (current->left != nullptr) {
+                        current = current->left;
+                    }
+                    node->value = current->value;   // Copy successor's value
+                    node->right = erase(node->right, current->value);  // Delete the successor from the right subtree
+                }
+                // Case 3: One child
+                else{
+                    // Get the single child
+                    if (node->left != nullptr){
+                        Node* temp = node->left;
+                        delete node;
+                        return temp;    // Return child to parent
+                    }
+                    else{
+                        Node* temp = node->right;
+                        delete node;
+                        return temp;    // Return child to parent
+                    }
+                }
+            }
+            
+            // Rebalance (Same as insert function)
+            if (node == nullptr){
+                return nullptr;
+            }
+
+            node->height = max(getHeight(node->left), getHeight(node->right)) + 1;
+            int balance = getFE(node);
+
+            if (balance > 1 && getFE(node->left) >= 0){
+                return rightRotate(node);
+            }
+            if (balance < -1 && getFE(node->right) <= 0){
+                return leftRotate(node);
+            }
+            if (balance > 1 && getFE(node->left) < 0){
+                node->left = leftRotate(node->left);
+                return rightRotate(node);
+            }
+            if (balance < -1 && getFE(node->right) > 0){
+                node->right = rightRotate(node->right);
+                return leftRotate(node);
+            }
+
+            return node;
+        }
     
         // -- Inorder Traversal (L, Root, R) --
         void inorder(Node* node){
@@ -167,93 +254,6 @@ class Tree{
                 destroy(node->right);
                 delete node;    // Delete after children
             }
-        }
-
-        // -- Recursive function to search a node -- 
-        Node* search(Node* node, double value){
-            if (node == nullptr){               // Not found
-                return nullptr;
-            }
-            if(abs(value - node->value) < e){   // Found
-                return node;
-            }
-            else if (value < node->value){      // Go left
-                return search(node->left, value);
-            }
-            else {                              // Go right
-                return search(node->right, value);
-            }
-        }
-
-        // -- Recursive function to errase a node -- 
-        Node* errase(Node* node, double value){
-            if (node == nullptr){   // Find the node
-                return nullptr;
-            }
-            
-            if (value < node->value){
-                node->left = errase(node->left, value);
-            }
-            else if (value > node->value){
-                node->right = errase(node->right, value);
-            }
-            // Node found, start deletion logic
-            else if(abs(value - node->value) < e){
-                // Case 1: No children (leaf node)
-                if (node->left == nullptr && node->right == nullptr){
-                    delete node;
-                    return nullptr;
-                }
-                // Case 2: Two children
-                else if(node->left != nullptr && node->right != nullptr){
-                    // Find smallest node in right subtree
-                    Node* current = node->right;
-                    while (current->left != nullptr) {
-                        current = current->left;
-                    }
-                    node->value = current->value;   // Copy successor's value
-                    node->right = errase(node->right, current->value);  // Delete the successor from the right subtree
-                }
-                // Case 3: One child
-                else{
-                    // Get the single child
-                    if (node->left != nullptr){
-                        Node* temp = node->left;
-                        delete node;
-                        return temp;    // Return child to parent
-                    }
-                    else{
-                        Node* temp = node->right;
-                        delete node;
-                        return temp;    // Return child to parent
-                    }
-                }
-            }
-            
-            // Rebalance (Same as insert function)
-            if (node == nullptr){
-                return nullptr;
-            }
-
-            node->height = max(getHeight(node->left), getHeight(node->right)) + 1;
-            int balance = getFE(node);
-
-            if (balance > 1 && getFE(node->left) >= 0){
-                return rightRotate(node);
-            }
-            if (balance < -1 && getFE(node->right) <= 0){
-                return leftRotate(node);
-            }
-            if (balance > 1 && getFE(node->left) < 0){
-                node->left = leftRotate(node->left);
-                return rightRotate(node);
-            }
-            if (balance < -1 && getFE(node->right) > 0){
-                node->right = rightRotate(node->right);
-                return leftRotate(node);
-            }
-
-            return node;
         }
 
         // -- Convert the Tree to a vector --
@@ -327,8 +327,8 @@ class Tree{
         }
 
         // -- Public erase --
-        void errase(double value){
-            root = errase(root, value);
+        void erase(double value){
+            root = erase(root, value);
         }
 
         // -- Merge two trees --
@@ -414,7 +414,7 @@ int main(){
                     cout << val << " does not exist in the Tree D:\n";
                 }
                 else {
-                    tree.errase(val);
+                    tree.erase(val);
                     cout << "\n...Deleting value...\n";
                 }
                 cout << "\n-----------------------------------------------------\n";
