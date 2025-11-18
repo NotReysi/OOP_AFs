@@ -10,22 +10,21 @@ using namespace std;
 //This helps to get rid of the imprecision
 const double e = 1e-9;
 
-    // ---------- Definition of the Node structure ----------
-    struct Node{
-        //---------- Atributes ----------
-        double value;  // The value stored in the node
-        int height;    // The height of the subtree rooted at this node
-        Node* left;    // Pointer to the left child
-        Node* right;   // Pointer to the right child
-
-        // Constructor
-        Node(double val){
-            value = val;
-            height = 1;
-            left = nullptr;
-            right = nullptr;
-        }
-    };
+// ---------- Definition of the Node structure ----------
+struct Node{
+    //---------- Atributes ----------
+    double value;  // The value stored in the node
+    int height;    // The height of the subtree rooted at this node
+    Node* left;    // Pointer to the left child
+    Node* right;   // Pointer to the right child
+    // Constructor
+    Node(double val){
+        value = val;
+        height = 1;
+        left = nullptr;
+        right = nullptr;
+    }
+};
 
 // ---------- Definition of the Tree class ----------
 class Tree{
